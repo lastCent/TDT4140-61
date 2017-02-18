@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Link to CSS -->
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'mainMenu/style.css' %}" />
+<head>
+    <meta charset="UTF-8">
+    <title>PineApple</title>
+</head>
+<body>
+    Homepagetest
+</body>
+
+    <div id="menu" style="position: relative; overflow: hidden;">
+        <div id="leftButton" style="position: relative; width: 33%; float: left;">
+            <!-- Link til Quiz -->
+            <form action="/quiz" method="get">
+                <input type="submit" value="Quiz" id="quizButton" />
+                <!--name="Submit" -->
+            </form>
+        </div>
+        <div id="middleButton" style="position: relative; width: 33%; float: left;">
+            <!-- Link til Statistikk -->
+            <form action="/Statistikk" method="get">
+                <input type="submit" value="Statistikk" id="statistikkButton" />
+            <!--name="Submit" -->
+            </form>
+        </div>
+        <div id="rightButton" style="position: relative; width: 33%; float: left;">
+            <!-- Link til Statistikk -->
+            <form action="/Databehandling" method="get">
+                <input type="submit" value="Databehandling" id="dataButton" />
+            <!--name="Submit" -->
+            </form>
+        </div>
+    </div>
+</html>

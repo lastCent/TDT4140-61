@@ -1,0 +1,6 @@
+
+body {
+    background-color: lightblue;
+}
+
+#quizButton, #statistikkButton, #dataButton {width: 250px; height: 400px; border-radius: 12px;}
