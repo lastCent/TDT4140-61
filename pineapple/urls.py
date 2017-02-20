@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^quiz/', quiz.views.test),
     url(r'', mainMenu.views.index),
+    url(r'^add_question/', quiz.views.add_question),
 ]
