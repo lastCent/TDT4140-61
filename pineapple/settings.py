@@ -75,21 +75,45 @@ WSGI_APPLICATION = 'pineapple.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'OPTIONS': {
+#            'read_default_file': '/path/to/my.cnf',
+#        },
+#    }
+#}
+#'''
+#    'DBNAME_1': {
+#        'NAME': 'user_data',
+#        'ENGINE': 'django.db.backends.mysql',
+#        'USER': 'mysql_user',
+#        'PASSWORD': 'priv4te'
+#    }
+#'''
+
+#MySQL config. For at denne skal fynke, må du ha laget en lokal database med rett navn og privilegier.
+#Kort guide, det er antatt at mysql er installert og at du har laget en root konto:
+    #åpne CMD
+    #Logg inn på MySQL som administrator:
+        # mysql -u root -p
+        #(Skriv inn passord)
+    #Lag ny database med navn "pinedatabase":
+        #CREATE DATABASE pinedatabase CHARACTER SET utf8;
+    #Gi databasen rett privilegier (username og passord er "admin":
+        #GRANT ALL PRIVILEGES ON pinedatabase.* To 'admin'@'127.0.0.1' IDENTIFIED BY 'admin';
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': 'pinedatabase',
+        'ENGINE': 'mysql.connector.django',
+        'USER': 'admin',
+        'PASSWORD': 'admin',
+        'OPTIONS': {
+          'autocommit': True,
+        },
     }
 }
-'''
-    'DBNAME_1': {
-        'NAME': 'user_data',
-        'ENGINE': 'django.db.backends.mysql',
-        'USER': 'mysql_user',
-        'PASSWORD': 'priv4te'
-    }
-'''
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
