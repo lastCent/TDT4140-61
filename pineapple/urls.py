@@ -20,7 +20,7 @@ import mainMenu.views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^quiz/', quiz.views.test),
     url(r'^menu/', mainMenu.views.index),
     url(r'^add_question/', quiz.views.add_question),
+    url(r'^view_question', quiz.views.view_question),
 ]
