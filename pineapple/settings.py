@@ -111,8 +111,8 @@ DATABASES = {
         'PASSWORD': 'admin',
         'OPTIONS': {
           'autocommit': True,
-        },
-    }
+        }
+    },
 }
 
 # Password validation
