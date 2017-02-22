@@ -26,11 +26,5 @@ class Question(models.Model):
     correct_alternative = models.IntegerField(default=1, choices=answer_choices)
     # todo: adding theme
 
-    def get_question(self):
+    def __str__(self):
         return self.question
-
-    def get_alternatives(self):
-        pass
-
-    def get_answers(self):
-        pass
