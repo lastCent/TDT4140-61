@@ -25,14 +25,17 @@ def view_question(request):
     if request.method == 'POST':
         pass
     else:
-        que = Question.objects.get(id=1)    # todo: prob. not working
-        cd = que.clean()
+        que = Question.objects.get(id=1)
         context = {
-            'question': cd['question'],
-            'alt_1': cd['alt_1'],
-            'alt_2': cd['alt_2'],
-            'alt_3': cd['alt_3'],
-            'alt_4': cd['alt_4'],
+            'question': que.question,
+            'alt_1': que.alternative_1,
+            'alt_2': que.alternative_2,
+            'alt_3': que.alternative_3,
+            'alt_4': que.alternative_4,
         }
         return render(request, 'view_question.html', context)
+
+
+def base(request):
+    return render(request, 'base.html')
 

@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'pineapple.wsgi.application'
 
 
 #DATABASES = {
-#    'default': {
+#    'sqlite': {
 #        'ENGINE': 'django.db.backends.mysql',
 #        'OPTIONS': {
 #            'read_default_file': '/path/to/my.cnf',
@@ -103,17 +103,25 @@ WSGI_APPLICATION = 'pineapple.wsgi.application'
         #CREATE DATABASE pinedatabase CHARACTER SET utf8;
     #Gi databasen rett privilegier (username og passord er "admin":
         #GRANT ALL PRIVILEGES ON pinedatabase.* To 'admin'@'127.0.0.1' IDENTIFIED BY 'admin';
+
 DATABASES = {
     'default': {
-        'NAME': 'pinedatabase',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'pinebase.db'),
+    }
+}
+'''
+    'default': {
         'ENGINE': 'mysql.connector.django',
+        'NAME': 'pinedatabase',
         'USER': 'admin',
         'PASSWORD': 'admin',
         'OPTIONS': {
           'autocommit': True,
         }
-    },
+    }
 }
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators

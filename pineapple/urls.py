@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^menu/', mainMenu.views.index),
     url(r'^add_question/', quiz.views.add_question),
     url(r'^view_question', quiz.views.view_question),
+    url(r'^base/', quiz.views.base)
 ]
