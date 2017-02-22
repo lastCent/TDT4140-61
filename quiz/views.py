@@ -16,7 +16,7 @@ def test(request):
             return render(request, 'test_ok.html', {'name': name, 'nice_number': number})
     else:
         form = TestForm()
-        print('nope')
+        #print('nope')
     return render(request, 'test_ext.html', {'form': form})
 
 def add_question(request):
