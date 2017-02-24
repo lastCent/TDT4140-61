@@ -9,6 +9,7 @@ label {
 
 
 {% block header %}
+    <button type="button" id="prev_btn">Previous</button>
     <button type="button" id="next_btn">Next</button>
 {% endblock %}
 
@@ -31,6 +32,6 @@ label {
         <label for="ans_4">{{ alt_4 }}</label><br>
 
         <br>
-        <input type="submit" value="Check">
+        <input type="submit" id="check_btn" value="Check">
     </form>
 {% endblock %}
