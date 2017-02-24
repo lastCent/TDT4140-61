@@ -24,7 +24,24 @@ class Question(models.Model):
     alternative_3 = models.CharField(max_length=20)
     alternative_4 = models.CharField(max_length=20)
     correct_alternative = models.IntegerField(default=1, choices=answer_choices)
-    # todo: adding theme
+    # todo: add theme
 
     def __str__(self):
         return self.question
+
+
+# todo: vertify the model lists
+class Quiz(models.Model):
+    name = models.CharField(max_length=20)
+    questions = models.TextField(max_length=1000)   # List of questions
+
+    def __str__(self):
+        return self.name
+
+
+class Theme(models.Model):
+    name = models.CharField(max_length=20)
+    resources = models.TextField()      # List of resource links
+
+    def __str__(self):
+        return self.name
