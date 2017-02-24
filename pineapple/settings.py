@@ -75,24 +75,6 @@ WSGI_APPLICATION = 'pineapple.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-
-#DATABASES = {
-#    'sqlite': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'OPTIONS': {
-#            'read_default_file': '/path/to/my.cnf',
-#        },
-#    }
-#}
-#'''
-#    'DBNAME_1': {
-#        'NAME': 'user_data',
-#        'ENGINE': 'django.db.backends.mysql',
-#        'USER': 'mysql_user',
-#        'PASSWORD': 'priv4te'
-#    }
-#'''
-
 #MySQL config. For at denne skal fynke, må du ha laget en lokal database med rett navn og privilegier.
 #Kort guide, det er antatt at mysql er installert og at du har laget en root konto:
     #åpne CMD
