@@ -1,15 +1,6 @@
 from django.db import models
 
 
-class TestModel(models.Model):
-    """ Models are the interface to the database """
-    name = models.CharField(unique=True, max_length=20)
-    number = models.IntegerField()
-
-    def get_name(self):
-        return self.name
-
-
 class Person(models.Model):
     name = models.CharField(max_length=80)
 
@@ -28,8 +19,9 @@ class Administrator(Person):
     def __str__(self):
         return self.name
 
+
 class ReadingMaterial(models.Model):
-    infoReference = models.IntegerField()  # Må sikkert endres
+    infoReference = models.IntegerField()  # todo: Må sikkert endres
 
 
 class ThemeTag(models.Model):
@@ -45,6 +37,7 @@ class Course(models.Model):
     name = models.CharField(max_length=20)
     # Relationships:
     administrators = models.ManyToManyField(Administrator)
+    # todo: burde gi tilgang til alt relevant til faget. Typ pensum, øvinger, spørsmål
 
     def __str__(self):
         return self.name
@@ -53,6 +46,7 @@ class Course(models.Model):
 class Exercise(models.Model):
     title = models.CharField(max_length=80)
     course = models.ForeignKey(Course)
+    # todo: exercise should give access to all its questions
 
     def __str__(self):
         return self.title
@@ -75,6 +69,7 @@ class Question(models.Model):
     # Relationships:
     themeTags = models.ManyToManyField(ThemeTag)
     belongsToExercises = models.ManyToManyField(Exercise)  # Sjekk onDelete og update options en gang
+    # todo: trenger vi kobling fra spørsmål til øving? --> man ikke kan lage spørsmål uten å ha dem i en øving
 
     def __str__(self):
         return self.question

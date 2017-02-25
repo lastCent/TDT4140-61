@@ -25,7 +25,7 @@ def view_question(request):
     if request.method == 'POST':
         pass
     else:
-        que = Question.objects.get(id=1)
+        que = Question.objects.get(id=1)    # todo: Må bla igjennom alt fra øving eller tema
         context = {
             'question': que.question,
             'alt_1': que.alternative_1,
