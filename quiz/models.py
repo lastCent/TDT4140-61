@@ -3,6 +3,7 @@ from django.db import models
 
 class Person(models.Model):
     name = models.CharField(max_length=80)
+    # todo: mail, tlf, passord
 
     def __str__(self):
         return self.name
@@ -70,6 +71,7 @@ class Question(models.Model):
     themeTags = models.ManyToManyField(ThemeTag)
     belongsToExercises = models.ManyToManyField(Exercise)  # Sjekk onDelete og update options en gang
     # todo: trenger vi kobling fra spørsmål til øving? --> man ikke kan lage spørsmål uten å ha dem i en øving
+    # todo: questions belong to courses
 
     def __str__(self):
         return self.question
