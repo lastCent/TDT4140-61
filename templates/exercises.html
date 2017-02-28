@@ -1,3 +1,7 @@
 {% extends 'base.html' %}
 
-
+{% block content %}
+    {% for exercise in exercises %}
+        <button type="button" class="btn_nav">{{ exercise.title }}</button>
+    {% endfor %}
+{% endblock %}

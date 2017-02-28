@@ -22,7 +22,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', mainMenu.views.index),
     url(r'^add_question/', quiz.views.add_question),
-    url(r'^view_question/', quiz.views.view_question),
     url(r'^base/', quiz.views.base),
-    url(r'^course/(?P<cid>[0-9]+)/$', quiz.views.course_page),
+    url(r'^courses/$', quiz.views.courses_page),
+    url(r'^exercises/(?P<course_id>[0-9]+)/$', quiz.views.exercises_page),
+    url(r'^question/(?P<exer_id>[0-9]+)/$', quiz.views.view_question),
 ]

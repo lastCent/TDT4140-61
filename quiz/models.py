@@ -26,6 +26,9 @@ class Administrator(Person):
 class ReadingMaterial(models.Model):
     info = models.CharField(max_length=500)
 
+    def __str__(self):
+        return self.info
+
 
 class ThemeTag(models.Model):
     name = models.CharField(max_length=20)
@@ -39,18 +42,10 @@ class ThemeTag(models.Model):
 class Course(models.Model):
     name = models.CharField(max_length=20)
     # Relationships:
-    administrators = models.ManyToManyField(Administrator)
+    administrators = models.ManyToManyField(Person)
 
     def __str__(self):
         return self.name
-
-
-class Exercise(models.Model):
-    title = models.CharField(max_length=80)
-    course = models.ForeignKey(Course)
-
-    def __str__(self):
-        return self.title
 
 
 class Question(models.Model):
@@ -72,6 +67,15 @@ class Question(models.Model):
 
     def __str__(self):
         return self.question
+
+
+class Exercise(models.Model):
+    title = models.CharField(max_length=80)
+    course = models.ForeignKey(Course)
+    questions = models.ManyToManyField(Question)
+
+    def __str__(self):
+        return self.title
 
 
 class Result(models.Model):
@@ -98,7 +102,5 @@ class CourseExercises(models.Model):
     course = models.ForeignKey(Course)
     exercise = models.ForeignKey(Exercise)
 
-
-class ExerciseQuestions(models.Model):
-    exercise = models.ForeignKey(Exercise)
-    questions = models.ForeignKey(Question)
+    def __str__(self):
+        return str(self.course) + '_' + str(self.exercise)

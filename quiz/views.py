@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from quiz.forms import QuestionForm
-from quiz.models import Question, Course, CourseExercises
+from quiz.models import Question, Course, CourseExercises, Exercise
 
 
 def add_question(request):
@@ -20,12 +20,13 @@ def add_question(request):
     return render(request, 'add_question.html', {'form': form, 'added': added, 'questions': q_list})
 
 
-def view_question(request):
+def view_question(request, exer_id):
     """ Displayes the question in the answer-question site """
     if request.method == 'POST':
         pass
     else:
-        que = Question.objects.get(id=1)    # todo: Må bla igjennom alt fra øving eller tema
+        exercise = Exercise.objects.get(id=exer_id)
+        que = exercise.objects.exclude()    # todo: fjern de som allerede er i results
         context = {
             'question': que.question,
             'alt_1': que.alternative_1,
@@ -40,6 +41,14 @@ def base(request):
     return render(request, 'base.html')
 
 
-def course_page(request, cid):
-    exercises = CourseExercises.objects.get(course=cid)
+def courses_page(request):  # todo: relevant courses for logged in person
+    courses = Course.objects.all()
+    return render(request, 'courses.html', {'courses': courses})
+
+
+def exercises_page(request, course_id):
+    co_exes = CourseExercises.objects.filter(course=course_id)
+    exercises = []
+    for co_ex in co_exes:
+        exercises.append(co_ex.exercise)
     return render(request, 'exercises.html', {'exercises': exercises})
