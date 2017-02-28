@@ -3,9 +3,9 @@ from django.db import models
 
 class Person(models.Model):
     name = models.CharField(max_length=80)
-    # todo: mail, tlf, passord
+    # todo: passord
     mail = models.EmailField()
-
+    tlf = models.IntegerField(max_length=8)     # Made for norwegian phone numbers
 
     def __str__(self):
         return self.name
@@ -23,8 +23,13 @@ class Administrator(Person):
         return self.name
 
 
+class CourseMembers(models.Model):
+    course = models.ForeignKey(Course)
+    student = models.ForeignKey(Student)
+
+
 class ReadingMaterial(models.Model):
-    infoReference = models.IntegerField()  # todo: Må sikkert endres
+    info = models.CharField(max_length=500)
 
 
 class ThemeTag(models.Model):
@@ -40,19 +45,32 @@ class Course(models.Model):
     name = models.CharField(max_length=20)
     # Relationships:
     administrators = models.ManyToManyField(Administrator)
-    # todo: burde gi tilgang til alt relevant til faget. Typ pensum, øvinger, spørsmål
 
     def __str__(self):
         return self.name
 
 
+class CourseThemes(models.Model):
+    course = models.ForeignKey(Course)
+    theme = models.ForeignKey(ThemeTag)
+
+
+class CourseExercises(models.Model):
+    course = models.ForeignKey(Course)
+    exercise = models.ForeignKey(Exercise)
+
+
 class Exercise(models.Model):
     title = models.CharField(max_length=80)
     course = models.ForeignKey(Course)
-    # todo: exercise should give access to all its questions
 
     def __str__(self):
         return self.title
+
+
+class ExerciseQuestions(models.Model):
+    exercise = models.ForeignKey(Exercise)
+    questions = models.ForeignKey(Question)
 
 
 class Question(models.Model):
@@ -71,9 +89,6 @@ class Question(models.Model):
     correct_alternative = models.IntegerField(default=1, choices=answer_choices)
     # Relationships:
     themeTags = models.ManyToManyField(ThemeTag)
-    belongsToExercises = models.ManyToManyField(Exercise)  # Sjekk onDelete og update options en gang
-    # todo: trenger vi kobling fra spørsmål til øving? --> man ikke kan lage spørsmål uten å ha dem i en øving
-    # todo: questions belong to courses
 
     def __str__(self):
         return self.question
