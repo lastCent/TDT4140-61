@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from quiz.forms import QuestionForm
-from quiz.models import Question
+from quiz.models import Question, Course, CourseExercises
 
 
 def add_question(request):
@@ -39,3 +39,7 @@ def view_question(request):
 def base(request):
     return render(request, 'base.html')
 
+
+def course_page(request, cid):
+    exercises = CourseExercises.objects.get(course=cid)
+    return render(request, 'exercises.html', {'exercises': exercises})

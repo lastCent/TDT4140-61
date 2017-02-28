@@ -5,7 +5,7 @@ class Person(models.Model):
     name = models.CharField(max_length=80)
     # todo: passord
     mail = models.EmailField()
-    tlf = models.IntegerField(max_length=8)     # Made for norwegian phone numbers
+    tlf = models.IntegerField()
 
     def __str__(self):
         return self.name
@@ -21,11 +21,6 @@ class Administrator(Person):
 
     def __str__(self):
         return self.name
-
-
-class CourseMembers(models.Model):
-    course = models.ForeignKey(Course)
-    student = models.ForeignKey(Student)
 
 
 class ReadingMaterial(models.Model):
@@ -50,27 +45,12 @@ class Course(models.Model):
         return self.name
 
 
-class CourseThemes(models.Model):
-    course = models.ForeignKey(Course)
-    theme = models.ForeignKey(ThemeTag)
-
-
-class CourseExercises(models.Model):
-    course = models.ForeignKey(Course)
-    exercise = models.ForeignKey(Exercise)
-
-
 class Exercise(models.Model):
     title = models.CharField(max_length=80)
     course = models.ForeignKey(Course)
 
     def __str__(self):
         return self.title
-
-
-class ExerciseQuestions(models.Model):
-    exercise = models.ForeignKey(Exercise)
-    questions = models.ForeignKey(Question)
 
 
 class Question(models.Model):
@@ -103,3 +83,22 @@ class Result(models.Model):
     def __str__(self):
         return self.resultVal
 
+
+class CourseMembers(models.Model):
+    course = models.ForeignKey(Course)
+    student = models.ForeignKey(Student)
+
+
+class CourseThemes(models.Model):
+    course = models.ForeignKey(Course)
+    theme = models.ForeignKey(ThemeTag)
+
+
+class CourseExercises(models.Model):
+    course = models.ForeignKey(Course)
+    exercise = models.ForeignKey(Exercise)
+
+
+class ExerciseQuestions(models.Model):
+    exercise = models.ForeignKey(Exercise)
+    questions = models.ForeignKey(Question)

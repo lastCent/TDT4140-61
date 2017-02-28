@@ -23,5 +23,6 @@ urlpatterns = [
     url(r'^$', mainMenu.views.index),
     url(r'^add_question/', quiz.views.add_question),
     url(r'^view_question/', quiz.views.view_question),
-    url(r'^base/', quiz.views.base)
+    url(r'^base/', quiz.views.base),
+    url(r'^course/(?P<cid>[0-9]+)/$', quiz.views.course_page),
 ]
