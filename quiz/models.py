@@ -1,10 +1,10 @@
 from django.db import models
 
 
+# TODO: Replace Person, Student and Administrator with Django User object, and corresponding groups + permissions
 class Person(models.Model):
     name = models.CharField(max_length=80)
-    # todo: passord
-    mail = models.EmailField()
+    mail = models.CharField(max_length=80)
     tlf = models.IntegerField()
 
     def __str__(self):
@@ -17,7 +17,7 @@ class Student(Person):
         return self.name
 
 
-class Administrator(Person):
+class Lecturer(Person):
 
     def __str__(self):
         return self.name
@@ -42,7 +42,8 @@ class ThemeTag(models.Model):
 class Course(models.Model):
     name = models.CharField(max_length=20)
     # Relationships:
-    administrators = models.ManyToManyField(Person)
+    administrators = models.ManyToManyField(Lecturer)
+    content = models.ManyToManyField(ReadingMaterial)  # Lesestoff som faget inneholder
 
     def __str__(self):
         return self.name
@@ -63,7 +64,8 @@ class Question(models.Model):
     alternative_4 = models.CharField(max_length=20)
     correct_alternative = models.IntegerField(default=1, choices=answer_choices)
     # Relationships:
-    themeTags = models.ManyToManyField(ThemeTag)
+    themeTags = models.ManyToManyField(ThemeTag)  # Relaterte temaer
+    belongsTo = models.ForeignKey(Course)  # Faget spørsmålet hører til
 
     def __str__(self):
         return self.question
