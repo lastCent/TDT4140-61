@@ -20,23 +20,6 @@ def add_question(request):
     return render(request, 'add_question.html', {'form': form, 'added': added, 'questions': q_list})
 
 
-def view_question(request, exer_id):
-    """ Displayes the question in the answer-question site """
-    if request.method == 'POST':
-        pass
-    else:
-        exercise = Exercise.objects.get(id=exer_id)
-        que = exercise.objects.exclude()    # todo: fjern de som allerede er i results
-        context = {
-            'question': que.question,
-            'alt_1': que.alternative_1,
-            'alt_2': que.alternative_2,
-            'alt_3': que.alternative_3,
-            'alt_4': que.alternative_4,
-        }
-        return render(request, 'view_question.html', context)
-
-
 def base(request):
     return render(request, 'base.html')
 
@@ -52,3 +35,20 @@ def exercises_page(request, course_id):
     for co_ex in co_exes:
         exercises.append(co_ex.exercise)
     return render(request, 'exercises.html', {'exercises': exercises})
+
+
+def view_question(request, exer_id):
+    """ Displayes the question in the answer-question site """
+    if request.method == 'POST':
+        pass
+    else:
+        exercise = Exercise.objects.get(id=exer_id)
+        que = exercise.objects.exclude()    # todo: fjern de som allerede er i results
+        context = {
+            'question': que.question,
+            'alt_1': que.alternative_1,
+            'alt_2': que.alternative_2,
+            'alt_3': que.alternative_3,
+            'alt_4': que.alternative_4,
+        }
+        return render(request, 'view_question.html', context)
