@@ -1,9 +1,11 @@
 from django.db import models
 
 
+# TODO: Replace Person, Student and Administrator with Django User object, and corresponding groups + permissions
 class Person(models.Model):
     name = models.CharField(max_length=80)
-    # todo: mail, tlf, passord
+    mail = models.CharField(max_length=80)
+    tlf = models.IntegerField()
 
     def __str__(self):
         return self.name
@@ -15,14 +17,15 @@ class Student(Person):
         return self.name
 
 
-class Administrator(Person):
+class Lecturer(Person):
 
     def __str__(self):
         return self.name
 
 
 class ReadingMaterial(models.Model):
-    infoReference = models.IntegerField()  # todo: Må sikkert endres
+    title = models.CharField(max_length=40)
+    link = models.CharField(max_length=100)  # Langt felt, kan jo være komplisert link
 
 
 class ThemeTag(models.Model):
@@ -37,20 +40,11 @@ class ThemeTag(models.Model):
 class Course(models.Model):
     name = models.CharField(max_length=20)
     # Relationships:
-    administrators = models.ManyToManyField(Administrator)
-    # todo: burde gi tilgang til alt relevant til faget. Typ pensum, øvinger, spørsmål
+    administrators = models.ManyToManyField(Lecturer)
+    content = models.ManyToManyField(ReadingMaterial)  # Lesestoff som faget inneholder
 
     def __str__(self):
         return self.name
-
-
-class Exercise(models.Model):
-    title = models.CharField(max_length=80)
-    course = models.ForeignKey(Course)
-    # todo: exercise should give access to all its questions
-
-    def __str__(self):
-        return self.title
 
 
 class Question(models.Model):
@@ -68,13 +62,19 @@ class Question(models.Model):
     alternative_4 = models.CharField(max_length=20)
     correct_alternative = models.IntegerField(default=1, choices=answer_choices)
     # Relationships:
-    themeTags = models.ManyToManyField(ThemeTag)
-    belongsToExercises = models.ManyToManyField(Exercise)  # Sjekk onDelete og update options en gang
-    # todo: trenger vi kobling fra spørsmål til øving? --> man ikke kan lage spørsmål uten å ha dem i en øving
-    # todo: questions belong to courses
+    themeTags = models.ManyToManyField(ThemeTag)  # Relaterte temaer
+    belongsTo = models.ForeignKey(Course)  # Faget spørsmålet hører til
 
     def __str__(self):
         return self.question
+
+class Exercise(models.Model):
+    title = models.CharField(max_length=80)
+    course = models.ForeignKey(Course)
+    contains = models.ManyToManyField(Question)  # Spørsmålet oppgaven vil tilby
+
+    def __str__(self):
+        return self.title
 
 
 class Result(models.Model):
@@ -85,4 +85,3 @@ class Result(models.Model):
 
     def __str__(self):
         return self.resultVal
-
