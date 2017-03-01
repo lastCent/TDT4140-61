@@ -146,3 +146,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     '/var/www/static/',
 ]
+
+# Login page
+LOGIN_URL = '/login/' #  Url der innlogging skjer
+LOGIN_REDIRECT_URL = '/' #  Url som det redirectes til etter successfull innlogging
