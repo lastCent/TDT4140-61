@@ -1,9 +1,11 @@
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render
 from django.http import HttpResponse
 from quiz.forms import QuestionForm
 from quiz.models import Question, Course, CourseExercises, Exercise
 
 
+# @permission_required() todo: find parameter name
 def add_question(request):
     """ Loads template to get neccecary data for the question object, and saves it to database """
     added = False
@@ -20,13 +22,15 @@ def add_question(request):
     return render(request, 'add_question.html', {'form': form, 'added': added, 'questions': q_list})
 
 
+@login_required
 def view_question(request, exer_id):
     """ Displayes the question in the answer-question site """
+    # todo: må finne ut hvilken bruker som er logget inn
     if request.method == 'POST':
         pass
     else:
         exercise = Exercise.objects.get(id=exer_id)
-        que = exercise.objects.exclude()    # todo: fjern de som allerede er i results
+        que = None    # todo: fjern de som allerede er i results
         context = {
             'question': que.question,
             'alt_1': que.alternative_1,
@@ -41,11 +45,13 @@ def base(request):
     return render(request, 'base.html')
 
 
+@login_required
 def courses_page(request):  # todo: relevant courses for logged in person
     courses = Course.objects.all()
     return render(request, 'courses.html', {'courses': courses})
 
 
+@login_required
 def exercises_page(request, course_id):
     co_exes = CourseExercises.objects.filter(course=course_id)
     exercises = []
