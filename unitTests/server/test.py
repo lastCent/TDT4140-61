@@ -22,3 +22,4 @@ class ServerTestCase(TestCase):
         resp = self.client.get('/add_question/')
         # Kan quizsiden nås?
         self.assertEqual(200, resp.status_code)
+
