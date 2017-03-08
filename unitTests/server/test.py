@@ -18,7 +18,8 @@ class ServerTestCase(TestCase):
         # Kan homepage nås?
         self.assertEqual(200, resp.status_code)
 
-    def testQuiz(self):
-        resp = self.client.get('/quiz/')
+    def testAdd_question(self):
+        resp = self.client.get('/add_question/')
         # Kan quizsiden nås?
         self.assertEqual(200, resp.status_code)
+
