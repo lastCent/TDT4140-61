@@ -26,3 +26,4 @@ def login_view(request):
                 return render(request, 'index.html', {'form': form })  # Redirect etter feilet registrering
     else:
         return render(request, 'index.html')
+
