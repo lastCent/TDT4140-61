@@ -16,12 +16,14 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 import quiz.views
-import mainMenu.views
+import frontPage.views
+import courses.views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', mainMenu.views.index),
+    url(r'^$', frontPage.views.index),
     url(r'^add_question/', quiz.views.add_question),
     url(r'^view_question/', quiz.views.view_question),
-    url(r'^base/', quiz.views.base)
+    url(r'^base/', quiz.views.base),
+    url(r'^courses/',courses.views.courses),
 ]
