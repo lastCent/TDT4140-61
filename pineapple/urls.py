@@ -17,11 +17,12 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 import quiz.views
+import frontPage.views
 import mainMenu.views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', mainMenu.views.index),
+    url(r'^$', frontPage.views.index),
     url(r'^add_question/', quiz.views.add_question),
     url(r'^view_question/', quiz.views.view_question),
     url(r'^base/', quiz.views.base),
