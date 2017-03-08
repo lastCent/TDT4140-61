@@ -15,15 +15,26 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 import quiz.views
+import frontPage.views
 import mainMenu.views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', mainMenu.views.index),
+    url(r'^$', frontPage.views.index),
     url(r'^add_question/', quiz.views.add_question),
     url(r'^base/', quiz.views.base),
     url(r'^courses/$', quiz.views.courses_page),
     url(r'^exercises/(?P<course_id>[0-9]+)/$', quiz.views.exercises_page),
     url(r'^question/(?P<exer_id>[0-9]+)/$', quiz.views.view_question),
+    url(r'^view_question/', quiz.views.view_question),
+    url(r'^base/', quiz.views.base),
+    url(r'^login/$', auth_views.login, name='login'),
+    url(r'^logout/$', auth_views.logout, name='logout'),
+    url(r'^password_change/$', auth_views.password_change, name='password_change'),
+    url(r'^password_change/done/$', auth_views.password_change_done, name='password_change_done'),
+    url(r'^password_reset/$', auth_views.password_reset, name='password_reset'),
+    url(r'^password_change/done/$', auth_views.password_reset_done, name='password_reset_done'),
+
 ]
