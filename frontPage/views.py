@@ -15,7 +15,7 @@ def login_view(request):
                 user = form.login(request)
                 if user:
                     login(request, user)
-                    return HttpResponseRedirect("/add_question/")  # Redirect to a success page.
+                    return HttpResponseRedirect("/courses/")  # Redirect to a success page.
             return render(request, 'index.html', {'form': form })        # Redirect etter feilet innlogging
         elif 'register-submit' in request.POST:
             form = RegisterForm(request.POST or None)
