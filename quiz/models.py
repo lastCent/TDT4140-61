@@ -18,12 +18,18 @@ class ThemeTag(models.Model):
 
 class Course(models.Model):
     name = models.CharField(max_length=20, primary_key=True)
+    description = models.CharField(max_length=100)
     # Relationships:
-    administrators = models.ManyToManyField(User)
+    administrators = models.ManyToManyField(User) # Antar dette er greit,
     content = models.ManyToManyField(ReadingMaterial)  # Lesestoff som faget inneholder
 
     def __str__(self):
         return self.name
+
+
+class CourseCollection(models.Model):
+    student = models.OneToOneField(User)
+    courses = models.ManyToManyField(Course)
 
 
 class Question(models.Model):

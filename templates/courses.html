@@ -74,8 +74,22 @@
     <header>
         <div class="container">
             <div class="intro-text">
-                <div class="intro-lead-in">You Look Juicy Today!</div>
-                    <div class="row">
+                <div class="intro-lead-in">You Look Juicy Today, {{ request.user.username}}!  </div>
+                    <div class="row" id="cardTarget">
+                        {% for course in courseList %}
+                            <div class="col-sm-3">
+                                <div class="card">
+                                    <div class="card card-inverse" style="background-color: #80ffff; border-color: #80ffff;">
+                                     <div class="card-block">
+                                        <h3 class="card-title">{{ course.0 }}</h3>
+                                        <p class="card-text">{{ course.1 }}</p>
+                                         <a href="{{ course.0 }}" class="btn btn-primary">Get learning!</a>
+                                     </div>
+                                    </div>
+                                </div>
+                              </div>
+                        {% endfor %}
+<!--
   <div class="col-sm-3">
     <div class="card">
         <div class="card card-inverse" style="background-color: #80ffff; border-color: #80ffff;">
@@ -105,6 +119,7 @@
       </div>
     </div>
   </div>
+  -->
   <div class="col-sm-3">
     <div class="card">
       <div class="card-block">
@@ -119,7 +134,7 @@
 
 
 
-
+            </div>
         </div>
     </header>
 

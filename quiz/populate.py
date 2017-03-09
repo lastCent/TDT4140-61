@@ -22,8 +22,8 @@ def add_tag(name, material_list):
     tag.save()
 
 
-def add_course(name, admin_list, material_list):
-    course = Course(name=name)
+def add_course(name, admin_list, material_list, description):
+    course = Course(name=name, description=description)
     course.save()
     for each in admin_list:
         course.administrators.add(User.objects.get(username=each))
@@ -68,6 +68,12 @@ def add_result(val, question, student):
     )
     result.save()
 
+def add_coursecollection(student, course_list):
+    course_col = CourseCollection(student=User.objects.get(username=student))
+    course_col.save()
+    for each in course_list:
+        course_col.courses.add(Course.objects.get(name=each))
+    course_col.save()
 
 def main():
     # Delete existing entries
@@ -168,6 +174,13 @@ def main():
          ]
     add_tag('Exercise Lectures', exercise_list)
 
+    # Lecturers
+    group = Group.objects.get(name='Lecturer')
+    lect = User.objects.create_user(username='Pekka', email='the@man.com', password='kanban')
+    lect.groups.add(group)
+    lect = User.objects.create_user(username='RandomStudAss', email='red@shirt.com', password='ctrlCctrlV')
+    lect.groups.add(group)
+
     # Students
     group = Group.objects.get(name='Student')
     stud = User.objects.create_user(username='Per', email='pers@son.no', password='personifikasjon')
@@ -176,14 +189,14 @@ def main():
     stud.groups.add(group)
     stud = User.objects.create_user(username='Sofie', email='sofie@notstud.ntnu.no', password='apple')
     stud.groups.add(group)
-    # Lecturers
-    group = Group.objects.get(name='Lecturer')
-    lect = User.objects.create_user(username='Pekka', email='the@man.com', password='kanban')
-    lect.groups.add(group)
-    lect = User.objects.create_user(username='RandomStudAss', email='red@shirt.com', password='ctrlCctrlV')
-    lect.groups.add(group)
     # Course:
-    add_course('TDT4140', ['Pekka'], pu_prosjekt_list + exercise_list)
+    add_course('TDT4140', ['Pekka'], pu_prosjekt_list + exercise_list, 'Beware the 27.4')
+    add_course('NyttFag',['Pekka'],[], 'Someone forgot to add a description')
+
+    #Course collections:
+    add_coursecollection('Per', ['TDT4140'])
+    add_coursecollection('Pål', ['TDT4140', 'NyttFag'])
+    add_coursecollection('Sofie', ['TDT4140'])
 
     # Question:
     add_question(
