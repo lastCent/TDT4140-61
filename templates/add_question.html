@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    newQuestion
+{% endblock %}
+
+{% block header %}
+    <h1>Add a question</h1>
+{% endblock %}
+
+{% block content %}
+    {% if added %}
+        <p>The question was successfully added. You can add another one.</p>
+    {% endif %}
+
+    {% if form.errors %}
+        <p style="color: red;">
+            Please correct the error{{ form.errors|pluralize }} below.
+        </p>
+    {% endif %}
+
+    <form action="" method="post">
+        <table>
+            {{ form.as_table }}
+        </table>
+        {% csrf_token %}
+        <input type="submit" value="Add">
+    </form>
+
+    <br>
+    <h2>Exsisting questions:</h2>
+    {% for q in questions %}
+        <li>{{ q.question }}</li>
+    {% endfor %}
+{% endblock %}
