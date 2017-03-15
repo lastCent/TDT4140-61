@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from quiz.forms import QuestionForm
-from quiz.models import Question, Course, CourseExercises, Exercise, CourseMembers
+from quiz.models import Question, Course, Exercise, CourseCollection
 
 
 @permission_required('lecturer')
@@ -48,20 +48,24 @@ def view_question(request, exer_id):
 @login_required
 def exercises_page(request, course_id):
     current_user = User(request.user)
-    if current_user.has_perm('student'):
-        course_exercises = CourseExercises.objects.filter(course=course_id)
-        exercises = [ce.exercise for ce in course_exercises]
-        return render(request, 'exercises.html', {'exercises': exercises})
+    if current_user.has_perm(course_id):    # course_id: string with course name
+        course_exercises = Exercise.objects.filter(course=course_id)
+        return render(request, 'exercises.html', {'exercises': course_exercises})
     elif current_user.has_perm('lecturer'):
-        pass
+        course_exercises = Exercise.objects.filter(course=course_id)
+        return render(request, 'exercises.html', {'exercises': course_exercises})
     else:
-        pass
+        pass    # Can add fitting error page here if there is time
 
 
 @login_required
 def courses_page(request):
     """get's CourseMember matchin the logged in persons pk. Then retrievs the Courses from the CourseMember objects"""
     current_user = request.user
-    course_member = CourseMembers.objects.filter(student=current_user.id)
+    course_member = CourseCollection.objects.filter(student=current_user.id)
     courses = [cm.course for cm in course_member]
     return render(request, 'courses.html', {'courses': courses})
+
+
+def test(request):
+    return render(request, 'exercises.html')
