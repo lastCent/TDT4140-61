@@ -20,7 +20,7 @@ class Course(models.Model):
     name = models.CharField(max_length=20, primary_key=True)
     description = models.CharField(max_length=100)
     # Relationships:
-    administrators = models.ManyToManyField(User) # Antar dette er greit,
+    administrators = models.ManyToManyField(User)   # Antar dette er greit,
     content = models.ManyToManyField(ReadingMaterial)  # Lesestoff som faget inneholder
 
     def __str__(self):
@@ -33,7 +33,6 @@ class CourseCollection(models.Model):
 
 
 class Question(models.Model):
-    """ OBS: If atributes are changed, QuestionForm in forms must be updateted """
     answer_choices = (
         (1, 'Alternative 1'),
         (2, 'Alternative 2'),
