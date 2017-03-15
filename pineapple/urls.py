@@ -18,11 +18,11 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 import quiz.views
 import frontPage.views
-import mainMenu.views
+import courses.views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', frontPage.views.index),
+    url(r'^$', frontPage.views.login_view),
     url(r'^add_question/', quiz.views.add_question),
     url(r'^base/', quiz.views.base),
     url(r'^courses/$', quiz.views.courses_page),
@@ -36,5 +36,5 @@ urlpatterns = [
     url(r'^password_change/done/$', auth_views.password_change_done, name='password_change_done'),
     url(r'^password_reset/$', auth_views.password_reset, name='password_reset'),
     url(r'^password_change/done/$', auth_views.password_reset_done, name='password_reset_done'),
-
-]
+    url(r'^courses/',courses.views.courses)
+    ]
