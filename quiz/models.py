@@ -21,14 +21,19 @@ class Course(models.Model):
     description = models.CharField(max_length=100)
     # Relationships:
     administrators = models.ManyToManyField(User)   # Antar dette er greit,
-    content = models.ManyToManyField(ReadingMaterial)  # Lesestoff som faget inneholder
+    content = models.ManyToManyField(ReadingMaterial, blank=True)  # Lesestoff som faget inneholder
 
     def __str__(self):
         return self.name
 
 
-class CourseCollection(models.Model):
+class CourseStudent(models.Model):
     student = models.OneToOneField(User)
+    courses = models.ManyToManyField(Course)
+
+
+class CourseAdmin(models.Model):
+    admin = models.OneToOneField(User)
     courses = models.ManyToManyField(Course)
 
 

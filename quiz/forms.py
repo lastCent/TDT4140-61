@@ -1,7 +1,7 @@
 # coding=utf-8
 """ This is where forms for the quiz module are stored """
 from django import forms
-from quiz.models import Question
+from quiz.models import Question, Course
 
 
 class TestForm(forms.Form):
@@ -13,4 +13,10 @@ class TestForm(forms.Form):
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
+        fields = '__all__'
+
+
+class CourseForm(forms.ModelForm):
+    class Meta:
+        model = Course
         fields = '__all__'

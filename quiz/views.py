@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from quiz.forms import QuestionForm
-from quiz.models import Question, Course, Exercise, CourseCollection
+from quiz.models import Question, Course, Exercise, CourseStudent
 
 
 @permission_required('lecturer')
@@ -62,7 +62,7 @@ def exercises_page(request, course_id):
 def courses_page(request):
     """get's CourseMember matchin the logged in persons pk. Then retrievs the Courses from the CourseMember objects"""
     current_user = request.user
-    course_member = CourseCollection.objects.filter(student=current_user.id)
+    course_member = CourseStudent.objects.filter(student=current_user.id)
     courses = [cm.course for cm in course_member]
     return render(request, 'courses.html', {'courses': courses})
 

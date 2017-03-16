@@ -7,7 +7,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 
 
+
 # Simple script to populate the database with objects for testing and demonstration
+
 
 def add_reading_material(title, link):
     material = ReadingMaterial(title=title, link=link)
@@ -68,12 +70,14 @@ def add_result(val, question, student):
     )
     result.save()
 
-def add_coursecollection(student, course_list):
-    course_col = CourseCollection(student=User.objects.get(username=student))
+
+def add_coursestudents(student, course_list):
+    course_col = CourseStudent(student=User.objects.get(username=student))
     course_col.save()
     for each in course_list:
         course_col.courses.add(Course.objects.get(name=each))
     course_col.save()
+
 
 def main():
     # Delete existing entries
@@ -193,10 +197,10 @@ def main():
     add_course('TDT4140', ['Pekka'], pu_prosjekt_list + exercise_list, 'Beware the 27.4')
     add_course('NyttFag',['Pekka'],[], 'Someone forgot to add a description')
 
-    #Course collections:
-    add_coursecollection('Per', ['TDT4140'])
-    add_coursecollection('Pål', ['TDT4140', 'NyttFag'])
-    add_coursecollection('Sofie', ['TDT4140'])
+    # Course students:
+    add_coursestudents('Per', ['TDT4140'])
+    add_coursestudents('Pål', ['TDT4140', 'NyttFag'])
+    add_coursestudents('Sofie', ['TDT4140'])
 
     # Question:
     add_question(

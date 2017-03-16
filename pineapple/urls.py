@@ -25,7 +25,6 @@ urlpatterns = [
     url(r'^$', frontPage.views.login_view),
     url(r'^add_question/', quiz.views.add_question),
     url(r'^base/', quiz.views.base),
-    url(r'^courses/$', quiz.views.courses_page),
     url(r'^course/(?P<course_id>[\w\-]+)/$', quiz.views.exercises_page),
     url(r'^question/(?P<exer_id>[0-9]+)/$', quiz.views.view_question),
     url(r'^view_question/', quiz.views.view_question),
