@@ -12,6 +12,7 @@ from django.contrib.auth.models import Group
 def add_reading_material(title, link):
     material = ReadingMaterial(title=title, link=link)
     material.save()
+    return material
 
 
 def add_tag(name, material_list):
@@ -20,7 +21,7 @@ def add_tag(name, material_list):
     for each in material_list:
         tag.material.add(ReadingMaterial.objects.get(title=each))
     tag.save()
-
+    return tag
 
 def add_course(name, admin_list, material_list, description):
     course = Course(name=name, description=description)
@@ -30,6 +31,7 @@ def add_course(name, admin_list, material_list, description):
     for each in material_list:
         course.content.add(ReadingMaterial.objects.get(title=each))
     course.save()
+    return course
 
 
 def add_question(title, question, alternative_list, correct_num, tag_list, belongs_to, is_worth):
@@ -48,6 +50,7 @@ def add_question(title, question, alternative_list, correct_num, tag_list, belon
     for each in tag_list:
         new_q.themeTags.add(ThemeTag.objects.get(name=each))
     new_q.save()
+    return new_q
 
     # TODO: Rewrite question to allow arbitrary amount of alternatives?
 
@@ -58,15 +61,21 @@ def add_exercise(title, course, question_list):
     for each in question_list:
         exercise.contains.add(Question.objects.get(title=each))
     exercise.save()
+    return exercise
 
 
 def add_result(val, question, student):
     result = Result(
         resultVal=val,
-        question=Question.objects.get(title=question),
-        student=User.objects.get(username=student)
+        question=Question.objects.get(title=question)
     )
     result.save()
+    user = User.objects.get(username=student)
+    try:
+        col = User.objects.get(username=user.get_username()).resultcollection.results.add(result)
+    except:
+        col = add_resultcollection(user.get_username(), [result.pk])
+    return result
 
 def add_coursecollection(student, course_list):
     course_col = CourseCollection(student=User.objects.get(username=student))
@@ -74,6 +83,23 @@ def add_coursecollection(student, course_list):
     for each in course_list:
         course_col.courses.add(Course.objects.get(name=each))
     course_col.save()
+    return course_col
+
+def add_exercisecollection(student, exercise_list):
+    exercise_col = PECollector(student=User.objects.get(username=student))
+    exercise_col.save()
+    for each in exercise_list:
+        exercise_col.exercises.add(Exercise.objects.get(name=each))
+    exercise_col.save()
+    return exercise_col
+
+def add_resultcollection(student, result_pk_list):
+    result_col = ResultCollection(student=User.objects.get(username=student))
+    result_col.save()
+    for each in result_pk_list:
+        result_col.results.add(Result.objects.get(pk=each))
+    result_col.save()
+    return result_col
 
 def main():
     # Delete existing entries
@@ -173,7 +199,6 @@ def main():
         'Software Quality Assurance'
          ]
     add_tag('Exercise Lectures', exercise_list)
-
     # Lecturers
     group = Group.objects.get(name='Lecturer')
     lect = User.objects.create_user(username='Pekka', email='the@man.com', password='kanban')
@@ -197,6 +222,8 @@ def main():
     add_coursecollection('Per', ['TDT4140'])
     add_coursecollection('Pål', ['TDT4140', 'NyttFag'])
     add_coursecollection('Sofie', ['TDT4140'])
+    add_coursecollection('Pekka', ['TDT4140'])
+    add_coursecollection('RandomStudAss', ['NyttFag'])
 
     # Question:
     add_question(
@@ -231,13 +258,14 @@ def main():
     add_exercise('Quiz 1', 'TDT4140', ['Q1', 'Q2', 'Q3'])
     add_exercise('New and empty', 'TDT4140', [])
     # Results:
-    add_result(1, 'Q1', 'Per')
-    add_result(2, 'Q1', 'Pål')
-    add_result(2, 'Q1', 'Sofie')
-    add_result(4, 'Q2', 'Per')
-    add_result(3, 'Q2', 'Pål')
-    add_result(4, 'Q2', 'Sofie')
-    add_result(4, 'Q3', 'Per')
+    add_result(True, 'Q1', 'Per')
+    add_result(True, 'Q1', 'Pål')
+    add_result(True, 'Q1', 'Sofie')
+    add_result(False, 'Q2', 'Per')
+    add_result(False, 'Q2', 'Pål')
+    add_result(True, 'Q2', 'Sofie')
+    add_result(True, 'Q3', 'Per')
+    add_result(True, 'Q3', 'Pål')
 
 
 if __name__ == '__main__':

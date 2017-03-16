@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
 class ReadingMaterial(models.Model):
     title = models.CharField(max_length=40, primary_key=True)
     link = models.CharField(max_length=100)  # Langt felt, kan jo være komplisert link
@@ -20,7 +19,7 @@ class Course(models.Model):
     name = models.CharField(max_length=20, primary_key=True)
     description = models.CharField(max_length=100)
     # Relationships:
-    administrators = models.ManyToManyField(User) # Antar dette er greit,
+    administrators = models.ManyToManyField(User)  # Antar dette er greit,
     content = models.ManyToManyField(ReadingMaterial)  # Lesestoff som faget inneholder
 
     def __str__(self):
@@ -66,10 +65,18 @@ class Exercise(models.Model):
 
 
 class Result(models.Model):
-    resultVal = models.IntegerField()  # Antall poeng
+    resultVal = models.BooleanField()
     # Relationships:
     question = models.ForeignKey(Question)
-    student = models.ForeignKey(User)
 
     def __str__(self):
-        return self.resultVal
+        return str(self.resultVal)
+
+
+class PECollector(models.Model):
+    student = models.OneToOneField(User)
+    exercises = models.ManyToManyField(Exercise)
+
+class ResultCollection(models.Model):
+    student = models.OneToOneField(User)
+    results = models.ManyToManyField(Result)
