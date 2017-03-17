@@ -15,11 +15,6 @@ class ServerTestCase(TestCase):
         self.client = Client()
 
     # Test server connectivity
-    def testHomepage(self):
-        resp = self.client.get('')
-        # Kan homepage nås?
-        self.assertEqual(200, resp.status_code)
-
     def testAdd_question(self):
         resp = self.client.get('/add_question/')
         # Kan quizsiden nås?
