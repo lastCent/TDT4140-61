@@ -26,7 +26,7 @@ SECRET_KEY = 'a23vukslfng-f39jo_=%@76a73ofgbg0x@6s-yc8-u!q@$8mhn'
 DEBUG = True
 
 # Seems 'testserver needs to be here for unit testing:
-ALLOWED_HOSTS = ['testserver', '127.0.0.1']
+ALLOWED_HOSTS = ['*']    # bakerste må endres. Sjekk ipv4 fra ipconfig i cmd
 
 
 # Application definition
@@ -38,8 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'quiz',
-    'unitTests'
+    'apps.quiz',
+    'apps.courses',
+    'apps.frontPage',
+    'apps.mainMenu',
+    'apps.botTester',
+    'unitTests',
 ]
 
 MIDDLEWARE = [
